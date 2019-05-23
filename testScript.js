@@ -1,10 +1,12 @@
 //Before running the script run the following command:
 //set GOOGLE_APPLICATION_CREDENTIALS=C:\Users\sgaroosi\Downloads\API Project-664231d44bfe.json
+//node testScript.js
 'use strict';
 
 // Imports the Google Cloud client and API library
 const { Datastore } = require('@google-cloud/datastore');
-var API = require('./customer_api');
+var API0 = require('./customer_api');
+
 
 async function testApi() {
     // Your Google Cloud Platform project ID
@@ -14,6 +16,8 @@ async function testApi() {
     const datastore = new Datastore({
         projectId: projectId,
     });
+    
+    var API = new API0(datastore);
 
     // The kind for the new entity
     const kind = 'Customer';
@@ -42,16 +46,16 @@ async function testApi() {
 
     await API.postCustomers(customers0, datastore);
 
-    const [customer] = await API.getCustomer(customerKey, datastore);
+    const [customer] = await API.getCustomer(customerKey);
     console.log(customer);
 
-    const [customers] = await API.getCustomers(kind, datastore);
+    const [customers] = await API.getCustomers(kind);
     console.log('Customers:');
     customers.forEach(customer => console.log(customer));
 
     customers[0].description = 'Child';
     console.log(customers);
-    await API.postCustomers(customers, datastore)
+    await API.postCustomers(customers)
 
 }
 testApi().catch(console.error);

@@ -1,19 +1,21 @@
+'use strict';
 //set GOOGLE_APPLICATION_CREDENTIALS=C:\Users\sgaroosi\Downloads\API Project-664231d44bfe.json
 
-module.exports = {
+module.exports = function(datastore) {
+
     //get one customer
-    getCustomer: function (customerKey, datastore) {
+    this.getCustomer = function(customerKey) {
         return datastore.get(customerKey);
     },
 
     //get all customers
-    getCustomers: function (kind, datastore) {
+    this.getCustomers = function(kind) {
         const query = datastore.createQuery(kind);
         return datastore.runQuery(query);
     },
 
     //return customers
-    postCustomers: function (customers, datastore) {
+    this.postCustomers = function(customers) {
         datastore.save(customers);
     }
 }
