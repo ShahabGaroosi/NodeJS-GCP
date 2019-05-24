@@ -44,15 +44,21 @@ async function testApi() {
         },
     }];
 
+    //return customers to cloud
     await API.postCustomers(customers0, datastore);
 
+    //fetch one customer from cloud
     const [customer] = await API.getCustomer(customerKey);
     console.log(customer);
 
+    //fetch all customers from cloud
     const [customers] = await API.getCustomers(kind);
+
+    //print all customers
     console.log('Customers:');
     customers.forEach(customer => console.log(customer));
 
+    //change, print and save one customer data
     customers[0].description = 'Child';
     console.log(customers);
     await API.postCustomers(customers)
