@@ -38,9 +38,9 @@ async function start() {
     var API = new API0(datastore);
     const kind = 'Customer';
 
-    var customers;// = await API.getCustomers(kind);
-    let option = "";
-    let customerKey;// = "";
+    var option;
+    var customers;
+    var customerKey;;
 
     while (option != "4") {
 
@@ -72,7 +72,7 @@ async function start() {
                 }
                 break;
             case "4":
-                console.log("Closing API.");
+                console.log("Exiting API.");
                 break;
             default:
                 console.log("Invalid option.");
