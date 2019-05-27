@@ -1,18 +1,22 @@
+//Script where the user input decides the API call.
+
 //Run the script by entering the following commands:
 //set GOOGLE_APPLICATION_CREDENTIALS=C:\Users\sgaroosi\Downloads\API Project-664231d44bfe.json
 //node UserInteractiveAPI.js
+
 'use strict';
 
 var async = require('async');
 
-// Imports the Google Cloud client and API library
+// Imports the necessary libraries
 const { Datastore } = require('@google-cloud/datastore');
 var API0 = require('./customer_api');
-
-
 const readline = require('readline');
+
+
 const readlineInterface = readline.createInterface(process.stdin, process.stdout);
 
+//User input function
 function ask(questionText) {
     return new Promise((resolve, reject) => {
         readlineInterface.question(questionText, resolve);
