@@ -1,7 +1,10 @@
 //Run the script by entering the following commands:
 //set GOOGLE_APPLICATION_CREDENTIALS=C:\Users\sgaroosi\Downloads\API Project-664231d44bfe.json
 //node CustomerAPI.js
-
+//GET http://localhost:3000/Customer to get all customers
+//GET http://localhost:3000/Customer/23423 to get customer with id 23423
+//POST http://localhost:3000/Customer to return customers
+//POST http://localhost:3000/Custome/23423 to return customer with id 23423
 'use strict';
 
 // Imports the necessary libraries
@@ -24,31 +27,34 @@ const datastore = new Datastore({
 const kind = 'Customer';
 app.use(bodyParser.json());
 
-var customers;
 
 app
     .get('/Customer', async function (req, res) {
         try {
             var query = await datastore.createQuery(kind);
-            [customers] = await datastore.runQuery(query);
-            res.send(customers)
+            var [customers] = await datastore.runQuery(query);
             console.log(customers)
+            var i;
+            for (i = 0; i < customers.length; i++) {
+                customers[i]['id'] = customers[i][datastore.KEY]['name']
+            }
+            res.send(customers)
         } catch (err) {
             res.send(JSON.stringify(err))
         }
-        
+
     })
     .get('/Customer/:id', async function (req, res) {
         try {
             const customerKey = await datastore.key([kind, req.params.id]);
-            const customer = await datastore.get(customerKey)
+            const [customer] = await datastore.get(customerKey)
             res.send(customer)
             console.log(customer)
         }
         catch (err) {
             res.send(JSON.stringify(err))
         }
-        
+
     })
     .post('/Customer', async function (req, res) {
         try {
@@ -70,7 +76,7 @@ app
     .post('/Customer/:id', async function (req, res) {
         try {
             var customer = {
-                key: datastore.key([kind, req.params.id]),
+                key: datastore.key([kind, req.params.id.toString()]),
                 data: req.body,
             };
             await datastore.save(customer);
