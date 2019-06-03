@@ -36,7 +36,7 @@ app
             console.log(customers)
             var i;
             for (i = 0; i < customers.length; i++) {
-                customers[i]['id'] = customers[i][datastore.KEY]['name']
+                customers[i]['id'] = customers[i][datastore.KEY]['id']
             }
             res.send(customers)
         } catch (err) {
@@ -46,7 +46,7 @@ app
     })
     .get('/Customer/:id', async function (req, res) {
         try {
-            const customerKey = await datastore.key([kind, req.params.id]);
+            const customerKey = await datastore.key([kind, parseInt(req.params.id)]);
             const [customer] = await datastore.get(customerKey)
             res.send(customer)
             console.log(customer)
@@ -62,7 +62,7 @@ app
             var i;
             for (i = 0; i < req.body.length; i++) {
                 customers.push({
-                    key: datastore.key([kind, req.body[i].id]),
+                    key: datastore.key([kind, parseInt(req.body[i].id)]),
                     data: req.body[i],
                 });
             }
@@ -76,7 +76,7 @@ app
     .post('/Customer/:id', async function (req, res) {
         try {
             var customer = {
-                key: datastore.key([kind, req.params.id.toString()]),
+                key: datastore.key([kind, req.params.id]),
                 data: req.body,
             };
             await datastore.save(customer);
