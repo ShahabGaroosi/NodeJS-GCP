@@ -1,6 +1,7 @@
 //Run the script by entering the following commands:
 //set GOOGLE_APPLICATION_CREDENTIALS=C:\Users\sgaroosi\Downloads\API Project-664231d44bfe.json
 //node CustomerAPI.js
+
 //GET http://localhost:3000/Customer to get all customers
 //GET http://localhost:3000/Customer/23423 to get customer with id 23423
 //POST http://localhost:3000/Customer to return customers
